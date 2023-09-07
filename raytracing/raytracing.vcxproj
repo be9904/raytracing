@@ -145,16 +145,20 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="color.h" />
-    <ClInclude Include="hittable.h" />
-    <ClInclude Include="hittable_list.h" />
-    <ClInclude Include="interval.h" />
-    <ClInclude Include="ray.h" />
-    <ClInclude Include="sphere.h" />
-    <ClInclude Include="utility.h" />
-    <ClInclude Include="vec3.h" />
-    <ClInclude Include="window.h" />
+    <None Include="..\bin\shaders\rt.frag" />
+    <None Include="..\bin\shaders\rt.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers\camera.h" />
+    <ClInclude Include="headers\color.h" />
+    <ClInclude Include="headers\hittable.h" />
+    <ClInclude Include="headers\hittable_list.h" />
+    <ClInclude Include="headers\interval.h" />
+    <ClInclude Include="headers\ray.h" />
+    <ClInclude Include="headers\sphere.h" />
+    <ClInclude Include="headers\utility.h" />
+    <ClInclude Include="headers\vec3.h" />
+    <ClInclude Include="headers\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "window.h"
+#include "headers/window.h"
 
-#include "utility.h"
+#include "headers/utility.h"
 
-#include "camera.h"
-#include "hittable_list.h"
-#include "sphere.h"
+#include "headers/camera.h"
+#include "headers/hittable_list.h"
+#include "headers/sphere.h"
 
 int main() {
     // World
