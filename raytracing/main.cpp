@@ -4,6 +4,9 @@
 #include "hittable_list.h"
 #include "sphere.h"
 
+#include "glad/glad.h"
+#include "glfw/glfw3.h"
+
 #include <iostream>
 
 int main() {
