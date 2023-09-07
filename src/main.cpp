@@ -7,6 +7,7 @@
 #include "headers/camera.h"
 #include "headers/hittable_list.h"
 #include "headers/sphere.h"
+#include "headers/cgutil.h"
 
 int main() {
     // World

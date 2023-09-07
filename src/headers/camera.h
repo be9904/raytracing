@@ -6,20 +6,29 @@
 #include "color.h"
 #include "hittable.h"
 
+#include <fstream>
+#include <vector>
+
 class camera {
     public:
-        double aspect_ratio = 1.0;          // Ratio of image width over height
-        int    image_width = 100;           // Rendered image width in pixel count
-        int    samples_per_pixel = 10;      // Count of random samples for each pixel
-        int    max_depth = 10;              // Maximum number of ray bounces into scene
+        double aspect_ratio = 16.0 / 9.0;           // Ratio of image width over height
+        int    image_width = 1280;                  // Rendered image width in pixel count
+        int    samples_per_pixel = 10;              // Count of random samples for each pixel
+        int    max_depth = 10;                      // Maximum number of ray bounces into scene
         int    pixel_u = 0;
         int    pixel_v = 0;
+        
+        std::ofstream outputFile;
+
+        camera() { initialize(); }
+        ~camera() { dispose(); }
 
         // render the whole image
         void render_image(const hittable& world) {
-            initialize();
+            // reset output before rendering a new one
+            reset_image();
 
-            std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+            outputFile << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
             for (int j = 0; j < image_height; ++j) {
                 std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
@@ -38,7 +47,7 @@ class camera {
                 ray r = get_ray(u, v);
                 pixel_color += ray_color(r, max_depth, world);
             }
-            write_color(std::cout, pixel_color, samples_per_pixel);
+            write_color(outputFile, pixel_color, samples_per_pixel);
         }
 
     private:
@@ -49,6 +58,9 @@ class camera {
         vec3   pixel_delta_v;  // Offset to pixel below
 
         void initialize() {
+            // Open a file for writing
+            outputFile.open("output.ppm", std::ios::out | std::ios::trunc);
+
             image_height = static_cast<int>(image_width / aspect_ratio);
             image_height = (image_height < 1) ? 1 : image_height;
 
@@ -71,6 +83,41 @@ class camera {
             auto viewport_upper_left =
                 center - vec3(0, 0, focal_length) - viewport_u / 2 - viewport_v / 2;
             pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+
+            // Log camera properties
+            std::clog << "Initialized Camera";
+            std::clog << "\nImage Width: " << image_width;
+            std::clog << "\nImage Height: " << image_height;
+            std::clog << "\nFocal Length: " << focal_length;
+        }
+
+        int reset_image() {
+            // Check if the file is open
+            if (!outputFile.is_open()) {
+                std::cerr << "Failed to open the file." << std::endl;
+                return 1; // Return an error code
+            }
+
+            // reset pixel data
+            outputFile << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+            for (int j = 0; j < image_height; ++j) {
+                for (int i = 0; i < image_width; ++i) {
+                    outputFile  << 0 << ' '
+                                << 0 << ' '
+                                << 0 << '\n';
+                }
+            }
+
+            outputFile.seekp(0, std::ios::beg);
+
+            return 0; // Return success
+        }
+
+        void dispose() {
+            std::clog << "Disposed Camera\n";
+
+            // Close the file
+            outputFile.close();
         }
 
         ray get_ray(int i, int j) const {
