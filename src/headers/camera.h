@@ -85,10 +85,11 @@ class camera {
             pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
             // Log camera properties
-            std::clog << "Initialized Camera";
-            std::clog << "\nImage Width: " << image_width;
-            std::clog << "\nImage Height: " << image_height;
-            std::clog << "\nFocal Length: " << focal_length;
+            std::clog << "Initialized Camera" << std::endl;
+            std::clog << "Image Width: " << image_width << std::endl;
+            std::clog << "Image Height: " << image_height << std::endl;
+            std::clog << "Samples per Pixel: " << samples_per_pixel << std::endl;
+            std::clog << "Max Depth: " << max_depth << std::endl;
         }
 
         int reset_image() {
