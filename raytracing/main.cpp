@@ -23,7 +23,7 @@ int main() {
     cam.max_depth = 50;
 
     // Render
-    // cam.render(world);
+    cam.render_image(world);
 
     // create window
     if (create_window() == -1) {
@@ -34,7 +34,7 @@ int main() {
         std::clog << "Successfully initialized window\n";
 
     while (!glfwWindowShouldClose(main_window)) {
-                        // update loop(TODO)
+                        // update loop (TODO)
         render();       // render loop
     }
 

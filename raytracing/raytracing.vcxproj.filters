@@ -64,5 +64,8 @@
     <ClInclude Include="headers\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\cgutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

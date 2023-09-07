@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\camera.h" />
+    <ClInclude Include="headers\cgutil.h" />
     <ClInclude Include="headers\color.h" />
     <ClInclude Include="headers\hittable.h" />
     <ClInclude Include="headers\hittable_list.h" />
