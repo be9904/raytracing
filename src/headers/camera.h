@@ -25,11 +25,13 @@ class camera {
 
         // render the whole image
         void render_image(const hittable& world) {
-            // reset output before rendering a new one
+            // Reset output before rendering a new one
             reset_image();
 
+            // Write ppm header
             outputFile << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
+            // Render each pixel
             for (int j = 0; j < image_height; ++j) {
                 std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
                 for (int i = 0; i < image_width; ++i) {
@@ -40,7 +42,7 @@ class camera {
             std::clog << "\rDone.                 \n";
         }
     
-        // render a single pixel
+        // Render a single pixel
         void render_pixel(const hittable& world, int u, int v) {
             color pixel_color(0, 0, 0);
             for (int sample = 0; sample < samples_per_pixel; ++sample) {
@@ -58,9 +60,10 @@ class camera {
         vec3   pixel_delta_v;  // Offset to pixel below
 
         void initialize() {
-            // Open a file for writing
+            // Open output file
             outputFile.open("output.ppm", std::ios::out | std::ios::trunc);
 
+            // Setup basic member vars
             image_height = static_cast<int>(image_width / aspect_ratio);
             image_height = (image_height < 1) ? 1 : image_height;
 
@@ -115,15 +118,14 @@ class camera {
         }
 
         void dispose() {
-            std::clog << "Disposed Camera\n";
-
             // Close the file
             outputFile.close();
+
+            std::clog << "Disposed Camera\n";
         }
 
         ray get_ray(int i, int j) const {
             // Get a randomly sampled camera ray for the pixel at location i,j.
-
             auto pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
             auto pixel_sample = pixel_center + pixel_sample_square();
 
