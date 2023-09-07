@@ -12,7 +12,10 @@ public:
     int    image_width = 100;           // Rendered image width in pixel count
     int    samples_per_pixel = 10;      // Count of random samples for each pixel
     int    max_depth = 10;              // Maximum number of ray bounces into scene
+    int    pixel_u = 0;
+    int    pixel_v = 0;
 
+    // render the whole image
     void render(const hittable& world) {
         initialize();
 
@@ -31,6 +34,16 @@ public:
         }
 
         std::clog << "\rDone.                 \n";
+    }
+    
+    // render a single pixel
+    void render_pixel(const hittable& world, int u, int v) {
+        color pixel_color(0, 0, 0);
+        for (int sample = 0; sample < samples_per_pixel; ++sample) {
+            ray r = get_ray(u, v);
+            pixel_color += ray_color(r, max_depth, world);
+        }
+        write_color(std::cout, pixel_color, samples_per_pixel);
     }
 
 private:

@@ -1,13 +1,12 @@
+#include <iostream>
+
+#include "window.h"
+
 #include "utility.h"
 
 #include "camera.h"
 #include "hittable_list.h"
 #include "sphere.h"
-
-#include "glad/glad.h"
-#include "glfw/glfw3.h"
-
-#include <iostream>
 
 int main() {
     // World
@@ -24,5 +23,21 @@ int main() {
     cam.max_depth = 50;
 
     // Render
-    cam.render(world);
+    // cam.render(world);
+
+    // create window
+    if (create_window() == -1) {
+        std::clog << "Error in create_window\n";
+        return -1;
+    }
+    else
+        std::clog << "Successfully initialized window\n";
+
+    while (!glfwWindowShouldClose(main_window)) {
+                        // update loop(TODO)
+        render();       // render loop
+    }
+
+    glfwTerminate();
+    return 0;
 }
