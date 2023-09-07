@@ -11,8 +11,8 @@
 
 class camera {
     public:
-        double aspect_ratio = 16.0 / 9.0;           // Ratio of image width over height
-        int    image_width = 1280;                  // Rendered image width in pixel count
+        double aspect_ratio = 1.0;           // Ratio of image width over height
+        int    image_width = 1024;                  // Rendered image width in pixel count
         int    samples_per_pixel = 10;              // Count of random samples for each pixel
         int    max_depth = 10;                      // Maximum number of ray bounces into scene
         int    pixel_u = 0;
@@ -21,6 +21,7 @@ class camera {
         std::ofstream outputFile;
 
         camera() { initialize(); }
+        camera(int w, double a_r) : image_width(w), aspect_ratio(a_r) { initialize(); }
         ~camera() { dispose(); }
 
         // render the whole image
@@ -32,6 +33,7 @@ class camera {
             outputFile << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
             // Render each pixel
+            std::clog << "Rendering " << image_width << " x " << image_height << " image...\n";
             for (int j = 0; j < image_height; ++j) {
                 std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
                 for (int i = 0; i < image_width; ++i) {
